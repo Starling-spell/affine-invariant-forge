@@ -6,3 +6,5 @@
 - Exact initialization, preservation and safety checks with independent BigInt verifier.
 - Immutable model/proof roots, permissionless bounded synthesis and repeatable theorem queries.
 - Adversarial/direct/callback tests, pinned runtime and sanitized deployment workflow.
+- Added bounded checker-guided generation repair and Studio raw-calldata read compatibility.
+- Live counter/transfer proofs passed; both lockstep synthesis failures retained without publishing an artifact.

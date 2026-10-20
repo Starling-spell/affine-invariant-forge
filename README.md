@@ -2,6 +2,8 @@
 
 Experimental GenLayer proof synthesis for small **unbounded-integer affine loops**. AI invents an inductive invariant and nonnegative rational implication witnesses. Validators independently check exact algebra against the complete immutable formal model before any proof is published.
 
+StudioNet: [`0xDA879F8B628C7488360fFd91d32968f1c5D02B5f`](https://explorer-studio.genlayer.com/address/0xDA879F8B628C7488360fFd91d32968f1c5D02B5f). Counter and transfer proofs were generated and independently verified. The harder lockstep case **failed closed twice and published no proof**; it is not reported as passed. [Finalized evidence and failures](LIVE_PROOFS.md) · [Submission text](SUBMISSION.md).
+
 Not an oracle, external service attestor, agent-alignment certificate, owner-controlled graph, or action permission. Mathematical models are the actual problem inputs, **not evidence that real software follows those models**. There are no funds, private documents, one-time consumers, graph heads or privileged finalizers.
 
 ## Problem and why GenLayer

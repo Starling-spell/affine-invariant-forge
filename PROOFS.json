@@ -1,0 +1,670 @@
+{
+  "network": "studionet",
+  "chain_id": 61999,
+  "accounts": [
+    {
+      "name": "studio-proof-deployer",
+      "address": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42"
+    },
+    {
+      "name": "fairresolve-demo",
+      "address": "0x34346773a22564cbcc5F1D67D1c1F9f196DaEA35"
+    }
+  ],
+  "transactions": [
+    {
+      "step": "deploy",
+      "signer": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "deploy",
+        "--contract",
+        "contracts/AffineInvariantForge.py"
+      ],
+      "hash": "0x3da3063ebeb18455bfe9314e71cc5e509d12a89edec1ebd4f8d903ffeb274f34",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "consensus": "MAJORITY_AGREE",
+      "committed": true
+    },
+    {
+      "step": "register-counter",
+      "signer": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "register",
+        "--args",
+        "counter-v1",
+        "json:{\"dimension\":1,\"guard\":[{\"a\":[1],\"b\":9}],\"initial\":[{\"a\":[1],\"b\":0},{\"a\":[-1],\"b\":0}],\"matrix\":[[1]],\"offset\":[1],\"safety\":[{\"a\":[1],\"b\":10},{\"a\":[-1],\"b\":0}],\"seed\":[0]}"
+      ],
+      "hash": "0xf288f630d8bc0a8b4a01eef6cd9f9ae5994102795b31664cb57cafa4b8994616",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "consensus": "MAJORITY_AGREE",
+      "committed": true
+    },
+    {
+      "step": "synthesize-counter",
+      "signer": "0x34346773a22564cbcc5F1D67D1c1F9f196DaEA35",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "synthesize",
+        "--args",
+        "d9fb3e90fa5579553556109405e7dd44d834b7d858726c6d985eea267e973506",
+        "0"
+      ],
+      "hash": "0x613e30a6552ecd6d04bc4c2caa78d21572f5dd5f95ee12d17f9198dcac1b8f9a",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "consensus": "MAJORITY_AGREE",
+      "committed": true
+    },
+    {
+      "step": "register-transfer",
+      "signer": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "register",
+        "--args",
+        "transfer-v1",
+        "json:{\"dimension\":2,\"guard\":[{\"a\":[-1,0],\"b\":-1}],\"initial\":[{\"a\":[1,0],\"b\":10},{\"a\":[-1,0],\"b\":-10},{\"a\":[0,1],\"b\":0},{\"a\":[0,-1],\"b\":0}],\"matrix\":[[1,0],[0,1]],\"offset\":[-1,1],\"safety\":[{\"a\":[1,1],\"b\":10},{\"a\":[-1,0],\"b\":0}],\"seed\":[10,0]}"
+      ],
+      "hash": "0xc24e69d2c5b8bb802fa6c143976f5d088c1ff9e6a5a892f82ea50232b013a48b",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "consensus": "MAJORITY_AGREE",
+      "committed": true
+    },
+    {
+      "step": "synthesize-transfer",
+      "signer": "0x34346773a22564cbcc5F1D67D1c1F9f196DaEA35",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "synthesize",
+        "--args",
+        "ab7d8556a8d93254470f3995732a6f35685505c6d185f8849cdc9cb4fd423df2",
+        "0"
+      ],
+      "hash": "0x0c4bc4a667ade0ad686112dde3f1a30cba0e103f33e82a88150392b700ae31b4",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "consensus": "MAJORITY_AGREE",
+      "committed": true
+    },
+    {
+      "step": "register-lockstep",
+      "signer": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "register",
+        "--args",
+        "lockstep-v1",
+        "json:{\"dimension\":2,\"guard\":[{\"a\":[1,0],\"b\":9}],\"initial\":[{\"a\":[1,0],\"b\":0},{\"a\":[-1,0],\"b\":0},{\"a\":[0,1],\"b\":0},{\"a\":[0,-1],\"b\":0}],\"matrix\":[[1,0],[0,1]],\"offset\":[1,1],\"safety\":[{\"a\":[0,1],\"b\":10}],\"seed\":[0,0]}"
+      ],
+      "hash": "0x62ed63ef96dde1668b1ac4feac44d42b73ee6669d2b56a7c2eea331a4750efd0",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "consensus": "MAJORITY_AGREE",
+      "committed": true
+    },
+    {
+      "step": "synthesize-lockstep",
+      "signer": "0x34346773a22564cbcc5F1D67D1c1F9f196DaEA35",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "synthesize",
+        "--args",
+        "b4a4be3f63a2eea8c771f777da072dbee3442fe1d544d02f3f7d10b61da3f663",
+        "0"
+      ],
+      "hash": "0xed50db282f5d184c8a3488b44cbbdb5fa21b4815288ea65218d0d9b9a13ab6e0",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "consensus": "MAJORITY_DISAGREE",
+      "committed": false,
+      "kind": "synthesis_failure",
+      "disclosure": "Both bounded AI generation attempts failed exact proof schema checks. No proof was stored. A later fresh generation, if attempted, is a distinct transaction after this known finalized failure."
+    },
+    {
+      "step": "synthesize-lockstep-retry",
+      "signer": "0x34346773a22564cbcc5F1D67D1c1F9f196DaEA35",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "synthesize",
+        "--args",
+        "b4a4be3f63a2eea8c771f777da072dbee3442fe1d544d02f3f7d10b61da3f663",
+        "0"
+      ],
+      "hash": "0x65a3ab2b92e0f40792c0de042e8c91e1f04295b85d54f505b8f21a903770938d",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "consensus": "MAJORITY_DISAGREE",
+      "committed": false,
+      "kind": "synthesis_failure",
+      "disclosure": "This bounded synthesis failed closed with ERROR and validator disagreement. No proof was stored. This is a synthesis failure, not an expected guard rejection or an unsafe-model verdict."
+    },
+    {
+      "step": "stale-attempt",
+      "signer": "0x34346773a22564cbcc5F1D67D1c1F9f196DaEA35",
+      "expected": "ERROR",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "synthesize",
+        "--args",
+        "d9fb3e90fa5579553556109405e7dd44d834b7d858726c6d985eea267e973506",
+        "0"
+      ],
+      "expected_message": "Attempt mismatch",
+      "hash": "0x8d88c8c6f416f6c8ad9a1203631070a5281eec60ef30bc028f2ad1ab0eca0576",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "consensus": "MAJORITY_AGREE",
+      "expected_error_matched": true,
+      "committed": false
+    },
+    {
+      "step": "nonce-replay",
+      "signer": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+      "expected": "ERROR",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "register",
+        "--args",
+        "counter-v1",
+        "json:{\"dimension\":1,\"guard\":[{\"a\":[1],\"b\":9}],\"initial\":[{\"a\":[1],\"b\":0},{\"a\":[-1],\"b\":0}],\"matrix\":[[1]],\"offset\":[1],\"safety\":[{\"a\":[1],\"b\":10},{\"a\":[-1],\"b\":0}],\"seed\":[0]}"
+      ],
+      "expected_message": "Problem nonce used",
+      "hash": "0xe810c6f0600ef59fd1b6a5ec06496e40484f346f73b53e6b40b3d0d5d18b3671",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "consensus": "MAJORITY_AGREE",
+      "expected_error_matched": true,
+      "committed": false
+    },
+    {
+      "step": "invalid-initial-seed-rejected",
+      "signer": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+      "expected": "ERROR",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "register",
+        "--args",
+        "bad-seed-v1",
+        "json:{\"dimension\":1,\"guard\":[{\"a\":[1],\"b\":9}],\"initial\":[{\"a\":[1],\"b\":0},{\"a\":[-1],\"b\":0}],\"matrix\":[[1]],\"offset\":[1],\"safety\":[{\"a\":[1],\"b\":10},{\"a\":[-1],\"b\":0}],\"seed\":[1]}"
+      ],
+      "expected_message": "Invalid formal model",
+      "hash": "0x167e3a3cf5a70688d8a5bf7b80387e8c4df22afb69c114c876ad2a538ec65ce8",
+      "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "consensus": "MAJORITY_AGREE",
+      "expected_error_matched": true,
+      "committed": false
+    }
+  ],
+  "problems": {
+    "counter": {
+      "problem_id": "d9fb3e90fa5579553556109405e7dd44d834b7d858726c6d985eea267e973506",
+      "problem": {
+        "contract": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "creator": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+        "model": {
+          "dimension": 1,
+          "guard": [
+            {
+              "a": [
+                1
+              ],
+              "b": 9
+            }
+          ],
+          "initial": [
+            {
+              "a": [
+                1
+              ],
+              "b": 0
+            },
+            {
+              "a": [
+                -1
+              ],
+              "b": 0
+            }
+          ],
+          "matrix": [
+            [
+              1
+            ]
+          ],
+          "offset": [
+            1
+          ],
+          "safety": [
+            {
+              "a": [
+                1
+              ],
+              "b": 10
+            },
+            {
+              "a": [
+                -1
+              ],
+              "b": 0
+            }
+          ],
+          "seed": [
+            0
+          ]
+        },
+        "model_root": "c32d7c8397bb7be2c0e4afefb36cda1208cc820d5ca1b586d9a116a874d61fdf",
+        "nonce": "counter-v1",
+        "policy": "affine-invariant-forge-v1",
+        "root": "f031a2baae524debd9fd4bf6fdb5732aab9ad245fb1000abcd325230068a2b9c"
+      },
+      "count": 1,
+      "proofs": [
+        {
+          "id": "a0ff57d54c85418a7fd75fe4d77c221a4b194e5f866e9e142a6c4be67efdea69",
+          "report": {
+            "binding": {
+              "attempt": 0,
+              "contract": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+              "model_root": "c32d7c8397bb7be2c0e4afefb36cda1208cc820d5ca1b586d9a116a874d61fdf",
+              "policy": "affine-invariant-forge-v1",
+              "problem": "d9fb3e90fa5579553556109405e7dd44d834b7d858726c6d985eea267e973506",
+              "problem_root": "f031a2baae524debd9fd4bf6fdb5732aab9ad245fb1000abcd325230068a2b9c",
+              "requester": "0x34346773a22564cbcc5F1D67D1c1F9f196DaEA35"
+            },
+            "proof": {
+              "initial": [
+                {
+                  "scale": 1,
+                  "weights": [
+                    1,
+                    0
+                  ]
+                },
+                {
+                  "scale": 1,
+                  "weights": [
+                    0,
+                    1
+                  ]
+                }
+              ],
+              "invariant": [
+                {
+                  "a": [
+                    1
+                  ],
+                  "b": 10
+                },
+                {
+                  "a": [
+                    -1
+                  ],
+                  "b": 0
+                }
+              ],
+              "safety": [
+                {
+                  "scale": 1,
+                  "weights": [
+                    1,
+                    0
+                  ]
+                },
+                {
+                  "scale": 1,
+                  "weights": [
+                    0,
+                    1
+                  ]
+                }
+              ],
+              "step": [
+                {
+                  "scale": 1,
+                  "weights": [
+                    0,
+                    0,
+                    1
+                  ]
+                },
+                {
+                  "scale": 1,
+                  "weights": [
+                    0,
+                    1,
+                    0
+                  ]
+                }
+              ]
+            }
+          },
+          "root": "239ea511faa6acc89fd7374122cc37210d7667482fe53ccb53d0aede9f480469",
+          "status": "PROVED"
+        }
+      ],
+      "verified": true
+    },
+    "transfer": {
+      "problem_id": "ab7d8556a8d93254470f3995732a6f35685505c6d185f8849cdc9cb4fd423df2",
+      "problem": {
+        "contract": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "creator": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+        "model": {
+          "dimension": 2,
+          "guard": [
+            {
+              "a": [
+                -1,
+                0
+              ],
+              "b": -1
+            }
+          ],
+          "initial": [
+            {
+              "a": [
+                1,
+                0
+              ],
+              "b": 10
+            },
+            {
+              "a": [
+                -1,
+                0
+              ],
+              "b": -10
+            },
+            {
+              "a": [
+                0,
+                1
+              ],
+              "b": 0
+            },
+            {
+              "a": [
+                0,
+                -1
+              ],
+              "b": 0
+            }
+          ],
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "offset": [
+            -1,
+            1
+          ],
+          "safety": [
+            {
+              "a": [
+                1,
+                1
+              ],
+              "b": 10
+            },
+            {
+              "a": [
+                -1,
+                0
+              ],
+              "b": 0
+            }
+          ],
+          "seed": [
+            10,
+            0
+          ]
+        },
+        "model_root": "74ff791cd3199500e3df0591ffdb3ea2b3c193b47577902b88ae53c3afa12847",
+        "nonce": "transfer-v1",
+        "policy": "affine-invariant-forge-v1",
+        "root": "8900d5ad65dfd9a37ff46b7350b93ecf5027c004972d30b16525a6cb5bf83eaa"
+      },
+      "count": 1,
+      "proofs": [
+        {
+          "id": "f56129bc3d8715996dbb5c87933588b6d4f492a664940d5d7002bbfabdc0bc05",
+          "report": {
+            "binding": {
+              "attempt": 0,
+              "contract": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+              "model_root": "74ff791cd3199500e3df0591ffdb3ea2b3c193b47577902b88ae53c3afa12847",
+              "policy": "affine-invariant-forge-v1",
+              "problem": "ab7d8556a8d93254470f3995732a6f35685505c6d185f8849cdc9cb4fd423df2",
+              "problem_root": "8900d5ad65dfd9a37ff46b7350b93ecf5027c004972d30b16525a6cb5bf83eaa",
+              "requester": "0x34346773a22564cbcc5F1D67D1c1F9f196DaEA35"
+            },
+            "proof": {
+              "initial": [
+                {
+                  "scale": 1,
+                  "weights": [
+                    1,
+                    0,
+                    1,
+                    0
+                  ]
+                },
+                {
+                  "scale": 1,
+                  "weights": [
+                    0,
+                    1,
+                    0,
+                    0
+                  ]
+                }
+              ],
+              "invariant": [
+                {
+                  "a": [
+                    1,
+                    1
+                  ],
+                  "b": 10
+                },
+                {
+                  "a": [
+                    -1,
+                    0
+                  ],
+                  "b": 0
+                }
+              ],
+              "safety": [
+                {
+                  "scale": 1,
+                  "weights": [
+                    1,
+                    0
+                  ]
+                },
+                {
+                  "scale": 1,
+                  "weights": [
+                    0,
+                    1
+                  ]
+                }
+              ],
+              "step": [
+                {
+                  "scale": 1,
+                  "weights": [
+                    1,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "scale": 1,
+                  "weights": [
+                    0,
+                    0,
+                    1
+                  ]
+                }
+              ]
+            }
+          },
+          "root": "0ba2fba8c7176845f41c95b27224af4eb7b9318a8cb2329f795c438dc1ae379d",
+          "status": "PROVED"
+        }
+      ],
+      "verified": true
+    },
+    "lockstep": {
+      "problem_id": "b4a4be3f63a2eea8c771f777da072dbee3442fe1d544d02f3f7d10b61da3f663",
+      "problem": {
+        "contract": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+        "creator": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+        "model": {
+          "dimension": 2,
+          "guard": [
+            {
+              "a": [
+                1,
+                0
+              ],
+              "b": 9
+            }
+          ],
+          "initial": [
+            {
+              "a": [
+                1,
+                0
+              ],
+              "b": 0
+            },
+            {
+              "a": [
+                -1,
+                0
+              ],
+              "b": 0
+            },
+            {
+              "a": [
+                0,
+                1
+              ],
+              "b": 0
+            },
+            {
+              "a": [
+                0,
+                -1
+              ],
+              "b": 0
+            }
+          ],
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "offset": [
+            1,
+            1
+          ],
+          "safety": [
+            {
+              "a": [
+                0,
+                1
+              ],
+              "b": 10
+            }
+          ],
+          "seed": [
+            0,
+            0
+          ]
+        },
+        "model_root": "b8105d3e54037b3fc3cb5c10d2efa64a5b7f548956f3052352b87c787be51bc2",
+        "nonce": "lockstep-v1",
+        "policy": "affine-invariant-forge-v1",
+        "root": "3f23558525c57c754edfd1c93f29460ca237cc73563e01b44b4f02252bf53ba2"
+      },
+      "count": 0,
+      "proofs": [],
+      "verified": true
+    }
+  },
+  "observations": {
+    "forged_step_rejected": true,
+    "claim_only_rejected": true,
+    "wrong_problem_root_denied": true,
+    "wrong_proof_root_denied": true,
+    "cross_problem_denied": true,
+    "invalid_model_not_stored": true
+  },
+  "prior_attempts": "PRIOR_ATTEMPTS.json",
+  "final_readback_verified": true,
+  "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+  "source": {
+    "address": "0xDA879F8B628C7488360fFd91d32968f1c5D02B5f",
+    "source_match": true,
+    "sha256": "c272997879d90089a853b9d35567c869adfd1eebb1f1127a2813425ead1d7a78"
+  }
+}

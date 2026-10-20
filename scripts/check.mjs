@@ -49,6 +49,14 @@ export async function receipt(hash,expected='SUCCESS',message){
  if(tx.status!=='FINALIZED'||leader?.execution_result!==expected||tx.result_name!=='MAJORITY_AGREE'||(message&&!decoded.includes(message)))throw Error('Receipt unverified');
  return {...result,committed:expected==='SUCCESS'};
 }
+export async function failedSynthesisReceipt(hash){
+ let tx=await rpc('eth_getTransactionByHash',[hash]);
+ const indexed=t=>t.status==='FINALIZED'&&t.result_name&&t.consensus_data?.leader_receipt?.some(x=>x.mode==='leader'&&x.execution_result);
+ for(let i=0;!indexed(tx)&&i<30;i++){await new Promise(r=>setTimeout(r,4000));tx=await rpc('eth_getTransactionByHash',[hash]);}
+ const leader=tx.consensus_data?.leader_receipt?.find(x=>x.mode==='leader');
+ if(tx.status!=='FINALIZED'||leader?.execution_result!=='ERROR'||tx.result_name!=='MAJORITY_DISAGREE')throw Error('Failed synthesis receipt mismatch');
+ return {hash,address:tx.to_address??tx.to,status:tx.status,execution:'ERROR',consensus:tx.result_name,committed:false};
+}
 export async function source(address){
  const norm=x=>x.replace(/\r\n/g,'\n').trimEnd()+'\n';
  const actual=norm(Buffer.from(await rpc('gen_getContractCode',[address]),'base64').toString('utf8'));

@@ -33,8 +33,11 @@ try{
   await tx('register-'+name,['write',p.address,'register','--args',name+'-v1','json:'+canonical(model)]);
   const id=digest({contract:p.address,creator:account.address,nonce:name+'-v1'});
   p.problems[name]={id};save();
-  await tx('synthesize-'+name,['write',p.address,'synthesize','--args',id,'0'],reviewer);
-  const verified=await state(p.address,id);assert.equal(verified.count,1);
+  const initial=p.transactions.find(t=>t.step==='synthesize-'+name);
+  const step=initial?.kind==='synthesis_failure'?'synthesize-'+name+'-retry':'synthesize-'+name;
+  const knownFailure=p.transactions.find(t=>t.step===step)?.kind==='synthesis_failure';
+  if(!knownFailure)await tx(step,['write',p.address,'synthesize','--args',id,'0'],reviewer);
+  const verified=await state(p.address,id);assert.equal(verified.count,knownFailure?0:1);
   assert.equal(canonical(verified.problem.model),canonical(model));p.problems[name]=verified;save();
  }
  const id=p.problems.counter.problem_id;
@@ -55,5 +58,5 @@ try{
   assert.equal(canonical(before),canonical(current));p.problems[name]=current;
  }
  p.source=await source(p.address);assert(p.transactions.every(t=>t.verified&&!t.broadcast_unknown));
- p.final_readback_verified=true;save();console.log(JSON.stringify({complete:true,address:p.address,proofs:Object.keys(p.problems).length,transactions:p.transactions.length}));
+ p.final_readback_verified=true;save();console.log(JSON.stringify({complete:true,address:p.address,proofs:Object.values(p.problems).reduce((n,x)=>n+x.count,0),transactions:p.transactions.length}));
 }catch{console.error('Sanitized proof workflow stopped; inspect recorded hashes/state before retry');process.exitCode=1;}
