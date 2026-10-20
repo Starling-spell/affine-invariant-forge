@@ -1,0 +1,86 @@
+{
+  "network": "studionet",
+  "chain_id": 61999,
+  "accounts": [
+    {
+      "name": "studio-proof-deployer",
+      "address": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42"
+    },
+    {
+      "name": "fairresolve-demo",
+      "address": "0x34346773a22564cbcc5F1D67D1c1F9f196DaEA35"
+    }
+  ],
+  "transactions": [
+    {
+      "step": "deploy",
+      "signer": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "deploy",
+        "--contract",
+        "contracts/AffineInvariantForge.py"
+      ],
+      "hash": "0x9ed0eca31faf2b353118e8cebfe221a9c9a43f231b52fdf0bd8a2538ffbdf01a",
+      "address": "0x1febE53cDaFC12d14c1C5711fA3A2D17d5596b45",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "consensus": "MAJORITY_AGREE",
+      "committed": true
+    },
+    {
+      "step": "register-counter",
+      "signer": "0x7a413BB4AB62E31d62d4cD9efC8C8a8Dae37FB42",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0x1febE53cDaFC12d14c1C5711fA3A2D17d5596b45",
+        "register",
+        "--args",
+        "counter-v1",
+        "json:{\"dimension\":1,\"guard\":[{\"a\":[1],\"b\":9}],\"initial\":[{\"a\":[1],\"b\":0},{\"a\":[-1],\"b\":0}],\"matrix\":[[1]],\"offset\":[1],\"safety\":[{\"a\":[1],\"b\":10},{\"a\":[-1],\"b\":0}],\"seed\":[0]}"
+      ],
+      "hash": "0x1e2158fc0075b3b6ab49a36f5e6b8e952f0ae1115f6e9b5a6caecd110c2a0920",
+      "address": "0x1febE53cDaFC12d14c1C5711fA3A2D17d5596b45",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "consensus": "MAJORITY_AGREE",
+      "committed": true
+    },
+    {
+      "step": "synthesize-counter",
+      "signer": "0x34346773a22564cbcc5F1D67D1c1F9f196DaEA35",
+      "expected": "SUCCESS",
+      "verified": true,
+      "cli_arguments": [
+        "write",
+        "0x1febE53cDaFC12d14c1C5711fA3A2D17d5596b45",
+        "synthesize",
+        "--args",
+        "773b6a0727992ae52b900270bc4a3b38d451dd4d1699a9f10f77a9da9420995b",
+        "0"
+      ],
+      "hash": "0x9f4a54bf374555fd851ed927c11e0e6fde470586c6a1d4b2b92fb2891d353e98",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "consensus": "MAJORITY_DISAGREE",
+      "committed": false
+    }
+  ],
+  "problems": {
+    "counter": {
+      "id": "773b6a0727992ae52b900270bc4a3b38d451dd4d1699a9f10f77a9da9420995b"
+    }
+  },
+  "observations": {},
+  "final_readback_verified": false,
+  "address": "0x1febE53cDaFC12d14c1C5711fA3A2D17d5596b45",
+  "source": {
+    "address": "0x1febE53cDaFC12d14c1C5711fA3A2D17d5596b45",
+    "source_match": true,
+    "sha256": "dcbd65975b509fa9646130f3221ac38561339f2a6079071b0c8275d245ea26ab"
+  },
+  "disclosure": "Initial deployment synthesized no theorem: first counter synthesis finalized ERROR with MAJORITY_DISAGREE. Retained here, never cited as a successful proof. Replacement deployment adds bounded checker-guided AI repair and diagnostics."
+}

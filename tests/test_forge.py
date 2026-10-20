@@ -188,6 +188,20 @@ def test_post_consensus_forgery_is_rechecked():
         namespace(fake)['synthesize_report']({'problem': 'correct'}, problem())
 
 
+def test_ai_repair_is_bounded_and_checker_driven():
+    class UserError(Exception):
+        pass
+    outputs = iter([{'status': 'PROVED'}, good()])
+    prompts = []
+    def llm(task, **kwargs):
+        prompts.append(task)
+        return next(outputs)
+    fake = SimpleNamespace(vm=SimpleNamespace(UserError=UserError, run_nondet_unsafe=lambda generate, validator: generate()),
+                           nondet=SimpleNamespace(exec_prompt=llm))
+    assert namespace(fake)['synthesize_report']({}, problem())['proof'] == good()
+    assert len(prompts) == 2 and 'CHECKER_FAILURE: Object fields' in prompts[1]
+
+
 def test_direct_lifecycle_replay_and_root_binding(direct_vm, direct_deploy, direct_alice, direct_bob):
     c = direct_deploy(str(SOURCE))
     direct_vm.sender = direct_alice
@@ -206,6 +220,8 @@ def test_direct_lifecycle_replay_and_root_binding(direct_vm, direct_deploy, dire
         c.synthesize(pid, 0)
     with direct_vm.expect_revert('Theorem root mismatch'):
         c.theorem(proof_id, 'f' * 64, record['root'])
+    with direct_vm.expect_revert('Theorem root mismatch'):
+        c.theorem(proof_id, registered['root'], 'f' * 64)
     direct_vm.sender = direct_alice
     with direct_vm.expect_revert('Problem nonce used'):
         c.register('counter', json.dumps(problem()))

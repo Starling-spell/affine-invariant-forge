@@ -45,7 +45,7 @@ Three groups of witnesses are mandatory:
 2. **Preservation:** invariant rows plus guards imply each substituted invariant row `(aM)·x <= b-a·c`.
 3. **Safety:** invariant rows imply every requested safety row, without assuming the loop guard.
 
-Missing obligations, negative multipliers, zero scales, wrong source ordering or one incorrect coefficient prevent publication. This witness format is sufficient, not complete: some valid integer properties require other invariant shapes or reasoning. Failure to synthesize a proof is **not a counterexample, unsafe verdict, or proof of impossibility**.
+Missing obligations, negative multipliers, zero scales, wrong source ordering or one incorrect coefficient prevent publication. Generation has at most two AI calls: an invalid first witness receives the exact checker failure for one repair attempt. No deterministic answer or unchecked fallback is installed. This witness format is sufficient, not complete: some valid integer properties require other invariant shapes or reasoning. Failure to synthesize a proof is **not a counterexample, unsafe verdict, or proof of impossibility**.
 
 ## State and API
 
@@ -85,7 +85,7 @@ npm run test:unit
 npm run test:sdk
 ```
 
-36 Python tests and 4 independent JavaScript tests; 7 SDK calldata roundtrips. Coverage includes all three proof obligations, rational scaling, initial-state guard mistakes, simultaneous matrix substitution, bounds/schema/duplicate keys, proof and problem substitution, stale attempts, immutable artifacts, failed synthesis not reserving state, actual validator callback verification, and post-consensus forgery. Exhaustive small implication witnesses are also checked for bounded integer counterexamples by separate Python and BigInt JavaScript implementations. The algebraic argument—not enumeration—establishes the unbounded theorem.
+37 Python tests and 4 independent JavaScript tests; 7 SDK calldata roundtrips. Coverage includes all three proof obligations, rational scaling, initial-state guard mistakes, simultaneous matrix substitution, bounds/schema/duplicate keys, proof and problem substitution, stale attempts, immutable artifacts, bounded checker-guided AI repair, failed synthesis not reserving state, actual validator callback verification, and post-consensus forgery. Exhaustive small implication witnesses are also checked for bounded integer counterexamples by separate Python and BigInt JavaScript implementations. The algebraic argument—not enumeration—establishes the unbounded theorem.
 
 Direct-mode tests run only the leader. Callback unit tests execute the validator explicitly; neither substitutes for actual network consensus. The narrow Windows cleanup fixture only defers gltest's known open-temporary-file unlink; contract exceptions are not masked. Live results belong in [LIVE_PROOFS.md](LIVE_PROOFS.md), not assumed from local success.
 

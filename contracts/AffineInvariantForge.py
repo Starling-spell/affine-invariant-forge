@@ -156,11 +156,20 @@ def validate_report(report, binding, problem):
 
 def synthesize_report(binding, problem):
     def generate():
-        try:
-            proof = check_proof(problem, gl.nondet.exec_prompt(prompt(problem), response_format="json"))
-        except Exception:
-            raise gl.vm.UserError("[LLM_ERROR] No valid algebraic witness")
-        return {"binding": binding, "proof": proof}
+        task = prompt(problem)
+        for _ in range(2):
+            candidate = None
+            try:
+                candidate = gl.nondet.exec_prompt(task, response_format="json")
+                proof = check_proof(problem, candidate)
+                return {"binding": binding, "proof": proof}
+            except Exception as exc:
+                reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
+                print("[SYNTHESIS_CHECK] " + reason[:80])
+                task = (prompt(problem) + "\nRepair the previous response using the original problem.\n"
+                        + "CHECKER_FAILURE: " + reason[:80] + "\nPREVIOUS_RESPONSE: "
+                        + canonical(candidate)[:12000])
+        raise gl.vm.UserError("[LLM_ERROR] No valid algebraic witness after two generation attempts")
 
     def validator(result):
         if not isinstance(result, gl.vm.Return):
