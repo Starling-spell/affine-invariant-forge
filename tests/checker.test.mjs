@@ -2,9 +2,14 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {verify,implication} from '../scripts/algebra.mjs';
+import {jsonSafe} from '../scripts/check.mjs';
+import {abi} from 'genlayer-js';
 const m=JSON.parse(fs.readFileSync('examples/counter.json'));
 const w=weights=>({weights,scale:1});
 const proof=()=>({invariant:[{a:[1],b:10},{a:[-1],b:0}],initial:[w([1,0]),w([0,1])],step:[w([0,0,1]),w([0,1,0])],safety:[w([1,0]),w([0,1])]});
+test('SDK decoded maps preserve complete nested proof data',()=>{
+ const original={model:m,proof:proof()};assert.deepEqual(jsonSafe(abi.calldata.decode(abi.calldata.encode(original))),original);
+});
 test('independent BigInt checker accepts induction',()=>assert(verify(m,proof())));
 test('rejects forged induction and safety',()=>{
  const p=proof();p.step[0].weights=[1,0,0];assert.throws(()=>verify(m,p));

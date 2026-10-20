@@ -28,13 +28,14 @@ async function tx(step,args,signer=account,expected='SUCCESS',message){
 try{
  assert.equal(await rpc('eth_chainId',[]),'0xf22f');
  const deployed=await tx('deploy',['deploy','--contract','contracts/AffineInvariantForge.py']);p.address=deployed.address;p.source=await source(p.address);save();
- for(const name of ['counter','transfer']){
+ for(const name of ['counter','transfer','lockstep']){
   const model=JSON.parse(fs.readFileSync('examples/'+name+'.json','utf8'));
   await tx('register-'+name,['write',p.address,'register','--args',name+'-v1','json:'+canonical(model)]);
   const id=digest({contract:p.address,creator:account.address,nonce:name+'-v1'});
   p.problems[name]={id};save();
   await tx('synthesize-'+name,['write',p.address,'synthesize','--args',id,'0'],reviewer);
-  const verified=await state(p.address,id);assert.equal(verified.count,1);p.problems[name]=verified;save();
+  const verified=await state(p.address,id);assert.equal(verified.count,1);
+  assert.equal(canonical(verified.problem.model),canonical(model));p.problems[name]=verified;save();
  }
  const id=p.problems.counter.problem_id;
  await tx('stale-attempt',['write',p.address,'synthesize','--args',id,'0'],reviewer,'ERROR','Attempt mismatch');
@@ -46,11 +47,13 @@ try{
  assert.equal(await read(p.address,'audit',[id,canonical(forged)]),false);p.observations.forged_step_rejected=true;
  assert.equal(await read(p.address,'audit',[id,'{"status":"PROVED"}']),false);p.observations.claim_only_rejected=true;
  assert(await denied(p.address,'theorem',[proof.id,'f'.repeat(64),proof.root]));p.observations.wrong_problem_root_denied=true;
+ assert(await denied(p.address,'theorem',[proof.id,p.problems.counter.problem.root,'f'.repeat(64)]));p.observations.wrong_proof_root_denied=true;
  assert(await denied(p.address,'theorem',[proof.id,p.problems.transfer.problem.root,proof.root]));p.observations.cross_problem_denied=true;
- for(const name of ['counter','transfer']){
+ assert(await denied(p.address,'get_problem',[digest({contract:p.address,creator:account.address,nonce:'bad-seed-v1'})]));p.observations.invalid_model_not_stored=true;
+ for(const name of ['counter','transfer','lockstep']){
   const before=p.problems[name],current=await state(p.address,before.problem_id);
   assert.equal(canonical(before),canonical(current));p.problems[name]=current;
  }
  p.source=await source(p.address);assert(p.transactions.every(t=>t.verified&&!t.broadcast_unknown));
- p.final_readback_verified=true;save();console.log(JSON.stringify({complete:true,address:p.address,proofs:2,transactions:p.transactions.length}));
+ p.final_readback_verified=true;save();console.log(JSON.stringify({complete:true,address:p.address,proofs:Object.keys(p.problems).length,transactions:p.transactions.length}));
 }catch{console.error('Sanitized proof workflow stopped; inspect recorded hashes/state before retry');process.exitCode=1;}

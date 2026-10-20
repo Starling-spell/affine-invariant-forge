@@ -73,6 +73,8 @@ Errors or validator disagreement publish no artifact. They are not falsely recor
 
 `examples/transfer.json`: start at `(x,y)=(10,0)`; while `x>=1`, simultaneously assign `(x-1,y+1)`. Prove `x+y<=10` and `x>=0`. Preservation uses a relational two-variable invariant and a guard-dependent lower bound. These are fictional mathematical fixtures, not external inventory or service-delivery evidence.
 
+`examples/lockstep.json`: start at `(0,0)`; while `x<=9`, increment both coordinates. Prove `y<=10`. Merely copying the requested safety row is **not inductive**: `(x,y)=(0,10)` satisfies it and the guard but steps to `(1,11)`. A proof must invent additional constraints, for example `y-x<=0` and `x<=10`, then prove those constraints too. No generated solution is supplied to the live model.
+
 ## Install and test
 
 ```powershell
@@ -85,7 +87,7 @@ npm run test:unit
 npm run test:sdk
 ```
 
-37 Python tests and 4 independent JavaScript tests; 7 SDK calldata roundtrips. Coverage includes all three proof obligations, rational scaling, initial-state guard mistakes, simultaneous matrix substitution, bounds/schema/duplicate keys, proof and problem substitution, stale attempts, immutable artifacts, bounded checker-guided AI repair, failed synthesis not reserving state, actual validator callback verification, and post-consensus forgery. Exhaustive small implication witnesses are also checked for bounded integer counterexamples by separate Python and BigInt JavaScript implementations. The algebraic argument—not enumeration—establishes the unbounded theorem.
+38 Python tests and 5 independent JavaScript tests; 7 SDK calldata roundtrips. Coverage includes all three proof obligations, rational scaling, initial-state guard mistakes, simultaneous matrix substitution, invented relational strengthening, bounds/schema/duplicate keys, proof and problem substitution, stale attempts, immutable artifacts, bounded checker-guided AI repair, failed synthesis not reserving state, actual validator callback verification, and post-consensus forgery. Exhaustive small implication witnesses are also checked for bounded integer counterexamples by separate Python and BigInt JavaScript implementations. The algebraic argument—not enumeration—establishes the unbounded theorem.
 
 Direct-mode tests run only the leader. Callback unit tests execute the validator explicitly; neither substitutes for actual network consensus. The narrow Windows cleanup fixture only defers gltest's known open-temporary-file unlink; contract exceptions are not masked. Live results belong in [LIVE_PROOFS.md](LIVE_PROOFS.md), not assumed from local success.
 
@@ -106,5 +108,7 @@ StudioNet is the gasless testing environment. Use a dedicated encrypted test key
 `node --dns-result-order=ipv4first scripts/complete-proofs.mjs` runs the documented serial demo and saves a public receipt ledger before/after each broadcast. It resumes known hashes read-only and halts on unknown outcomes; never blindly rerun a timed-out send. Native CLI arguments are passed without shell interpolation. Raw validator/provider configuration is suppressed.
 
 `node scripts/check.mjs source CONTRACT_ADDRESS` compares actual deployed source to the local contract. `node scripts/check.mjs state CONTRACT_ADDRESS PROBLEM_ID` recomputes model/proof roots, checks witnesses in independent BigInt arithmetic and reads root-bound theorems. `node scripts/verify-live.mjs` rechecks the entire existing ledger without signing or sending. Finalization alone is insufficient: require execution `SUCCESS`, consensus `MAJORITY_AGREE`, matching source and actual state. Expected `ERROR` transactions are rejection tests, not successful proof syntheses.
+
+The tested Studio endpoint rejected long RLP-wrapped SDK `gen_call` reads with an RLP decoding error. The verifier uses SDK-encoded **raw calldata** in explicit read-mode `gen_call` requests instead; full-proof audits then work without changing the deployed contract. Its RPC allowlist refuses writes, and transport failures never count as expected contract rejections.
 
 Explorer links use `https://explorer-studio.genlayer.com/address/ADDRESS` and `/tx/HASH`. See [submission text](SUBMISSION.md), [security boundaries](SECURITY.md), and [architecture](docs/architecture.md).

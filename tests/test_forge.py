@@ -58,6 +58,17 @@ def test_fractional_witness_and_different_valid_creative_proof():
     assert NS['check_proof'](problem(), p) == p
 
 
+def test_lockstep_requires_an_invented_relational_strengthening():
+    m = problem('lockstep')
+    # Safety alone is not inductive: (0,10) enables a step to (1,11).
+    assert 0 <= 9 and 10 <= 10 and 11 > 10
+    p = {'invariant': [{'a': [-1, 1], 'b': 0}, {'a': [1, 0], 'b': 10}],
+         'initial': [w([0, 1, 1, 0]), w([1, 0, 0, 0])],
+         'step': [w([1, 0, 0]), w([0, 0, 1])], 'safety': [w([1, 1])]}
+    assert NS['check_proof'](m, p) == p
+    assert p['invariant'][0] not in m['initial'] + m['guard'] + m['safety']
+
+
 @pytest.mark.parametrize('change', [
     lambda p: p['invariant'][0].update(b=9),
     lambda p: p['step'][0].update(weights=[1, 0, 0]),
